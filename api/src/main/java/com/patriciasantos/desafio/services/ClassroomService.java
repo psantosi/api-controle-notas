@@ -71,14 +71,14 @@ public class ClassroomService {
     }
 
     private void validateIfClassBelongsToTheUser(final Classroom classroom, final Long userId) {
-        if (!classroom.userId().equals(userId)) {
+        if (!classroom.getIdUser().equals(userId)) {
             throw new BusinessException("A classe não pertence a este usuário!");
         }
     }
 
     private void validateIfClassWasDeleted(final Classroom classroom) {
         if (!classroom.isStatus()) {
-            throw new ObjectNotFoundException("Classe foi excluida!");
+            throw new ObjectNotFoundException("Classe excluida!");
         }
     }
 }

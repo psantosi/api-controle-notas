@@ -37,7 +37,7 @@ public class Task {
     private Boolean status = true;
 
     @ManyToOne
-    @JoinColumn(name = "class_id", nullable = false, updatable = false)
+    @JoinColumn(name = "classroom_id", nullable = false, updatable = false)
     private Classroom classroom;
 
     @OneToMany(mappedBy = "task")
@@ -83,12 +83,40 @@ public class Task {
         this.classroom = classroom;
     }
 
+    public Long getIdClassroom() {
+        return this.classroom.getId();
+    }
+
     public List<Grade> getGrades() {
         return this.grades;
     }
 
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
+    }
+
+    public static class TaskBuilder {
+
+        private Task task;
+
+        public TaskBuilder create() {
+            task = new Task();
+            return this;
+        }
+
+        public TaskBuilder withName(final String name) {
+            task.setName(name);
+            return this;
+        }
+
+        public TaskBuilder withClassroom(final Classroom classroom) {
+            task.setClassroom(classroom);
+            return this;
+        }
+
+        public Task build() {
+            return task;
+        }
     }
 
 }

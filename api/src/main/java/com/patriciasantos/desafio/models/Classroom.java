@@ -100,7 +100,7 @@ public class Classroom {
         this.tasks = tasks;
     }
 
-    public Long userId() {
+    public Long getIdUser() {
         return user.getId();
     }
 
