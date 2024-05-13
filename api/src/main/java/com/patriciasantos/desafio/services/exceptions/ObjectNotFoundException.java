@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import jakarta.persistence.EntityNotFoundException;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ObjetoNaoEncontradoException extends EntityNotFoundException {
+public class ObjectNotFoundException extends EntityNotFoundException {
 
-    public ObjetoNaoEncontradoException(final String mensagem) {
+    public ObjectNotFoundException(final String mensagem) {
         super(mensagem);
     }
 }

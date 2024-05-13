@@ -13,41 +13,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.patriciasantos.desafio.models.Usuario;
-import com.patriciasantos.desafio.models.to.UsuarioTO;
-import com.patriciasantos.desafio.services.UsuarioService;
+import com.patriciasantos.desafio.models.User;
+import com.patriciasantos.desafio.models.to.UserTO;
+import com.patriciasantos.desafio.services.UserService;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/user")
 @Validated
-public class UsuarioController {
+public class UserController {
 
-    private final UsuarioService usuarioService;
+    private final UserService userService;
 
-    public UsuarioController(final UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
+    public UserController(final UserService userService) {
+        this.userService = userService;
     }
     
 
     @PostMapping
-    public ResponseEntity<Object> criar(@RequestBody UsuarioTO usuarioTo) {
-        final Usuario usuario = this.usuarioService.criar(usuarioTo);
+    public ResponseEntity<Object> create(@RequestBody UserTO userTO) {
+        final User user = this.userService.create(userTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(usuario.getId()).toUri();
+                .path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody UsuarioTO usuarioTo, @PathVariable Long id) {
-        this.usuarioService.atualizar(id, usuarioTo);
+    public ResponseEntity<Void> update(@RequestBody UserTO userTO, @PathVariable Long id) {
+        this.userService.update(id, userTO);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        this.usuarioService.excluir(id);
+        this.userService.delete(id);
         return ResponseEntity.noContent().build();
     }
     

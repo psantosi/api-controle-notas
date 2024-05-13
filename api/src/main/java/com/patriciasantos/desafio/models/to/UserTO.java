@@ -1,10 +1,10 @@
 package com.patriciasantos.desafio.models.to;
 
-public class UsuarioTO {
+public class UserTO {
 
     private String username;
     private String password;
-    private Integer perfil;
+    private Integer profile;
 
 
     public String getUsername() {
@@ -23,13 +23,7 @@ public class UsuarioTO {
         this.password = password;
     }
 
-    public Integer getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(final Integer perfil) {
-        this.perfil = perfil;
-    }
-
-    
+    public Integer getProfile() {
+        return profile;
+    }    
 }

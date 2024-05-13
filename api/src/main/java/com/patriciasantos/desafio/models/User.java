@@ -1,8 +1,11 @@
 package com.patriciasantos.desafio.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.patriciasantos.desafio.models.enums.PerfilEnum;
+import com.patriciasantos.desafio.models.enums.ProfileEnum;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
@@ -10,13 +13,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,20 +40,20 @@ public class Usuario {
     @Size(min = 2, max = 60)
     private String password;
 
-    @Column(name = "ativo", nullable = false)
+    @Column(name = "status", nullable = false)
     @NonNull
-    private Boolean ativo = true;
+    private Boolean status = true;
 
     @JsonProperty( access = Access.WRITE_ONLY)
-    @Column(name = "perfil", nullable = false) 
-    private Integer perfil;
+    @Column(name = "profile", nullable = false) 
+    private Integer profile;
     
 
-    public Usuario() {
+    public User() {
 
     }
 
-    public Usuario(final Long id, final String username, final String password) {
+    public User(final Long id, final String username, final String password) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -79,56 +83,65 @@ public class Usuario {
         this.password = password;
     }
 
-    public Boolean getAtivo() {
-        return ativo;
+
+    public Boolean isStatus() {
+        return this.status;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public Boolean getStatus() {
+        return this.status;
     }
 
-    public Integer getPerfil() {
-        return perfil;
+    public void setStatus(final Boolean status) {
+        this.status = status;
     }
 
-    public void setPerfil(Integer perfil) {
-        this.perfil = perfil;
-    }   
-
-    public PerfilEnum getPerfilEnum() {
-        return PerfilEnum.toEnum(this.perfil);
+    public Integer getProfile() {
+        return this.profile;
     }
 
-    public void setPerfilEnum(final PerfilEnum perfilEnum) {
-        this.perfil = perfilEnum.getCodigo();
+    public void setProfile(final Integer profile) {
+        this.profile = profile;
+    }
+   
+
+    public ProfileEnum getProfileEnum() {
+        return ProfileEnum.toEnum(this.profile);
     }
 
-    public static class UsuarioBuilder {
+    public void setProfileEnum(final ProfileEnum profileEnum) {
+        this.profile = profileEnum.getCode();
+    }
 
-        private Usuario usuario;
+    @OneToMany(mappedBy = "user")
+    private List<Classroom> classrooms = new ArrayList<Classroom>();
 
-        public UsuarioBuilder create() {
-            usuario = new Usuario();
+    public static class UserBuilder {
+
+        private User user;
+
+        public UserBuilder create() {
+            user = new User();
             return this;
         }
 
-        public UsuarioBuilder comUsername(final String username) {
-            usuario.setUsername(username);
+        public UserBuilder withUsername(final String username) {
+            user.setUsername(username);
             return this;
         }
 
-        public UsuarioBuilder comPassword(final String password) {
-            usuario.setPassword(password);
+        public UserBuilder withPassword(final String password) {
+            user.setPassword(password);
             return this;
         }
 
-        public UsuarioBuilder comPerfil(final Integer perfil) {
-            usuario.setPerfil(perfil);
+        public UserBuilder withProfile(final Integer profile) {
+            user.setProfile(profile);
             return this;
         }
 
-        public Usuario build() {
-            return usuario;
+        public User build() {
+            return user;
         }
 
     }

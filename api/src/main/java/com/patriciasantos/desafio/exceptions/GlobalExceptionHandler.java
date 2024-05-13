@@ -17,7 +17,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.patriciasantos.desafio.services.exceptions.AuthorizationException;
-import com.patriciasantos.desafio.services.exceptions.ObjetoNaoEncontradoException;
+import com.patriciasantos.desafio.services.exceptions.BusinessException;
+import com.patriciasantos.desafio.services.exceptions.ObjectNotFoundException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,10 +46,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
                 request);
     }
 
-    @ExceptionHandler(ObjetoNaoEncontradoException.class)
+    @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> handleObjectNotFoundException(
-        ObjetoNaoEncontradoException objectNotFoundException,
+        ObjectNotFoundException objectNotFoundException,
             WebRequest request) {
         return buildErrorResponse(
                 objectNotFoundException,
@@ -65,6 +66,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler imple
         return buildErrorResponse(
                 constraintViolationException,
                 HttpStatus.UNPROCESSABLE_ENTITY,
+                request);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleBusinessExceptionException(
+            BusinessException BusinessException,
+            WebRequest request) {
+        return buildErrorResponse(
+                BusinessException,
+                HttpStatus.BAD_REQUEST,
                 request);
     }
 

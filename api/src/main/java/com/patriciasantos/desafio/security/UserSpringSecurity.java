@@ -7,9 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.patriciasantos.desafio.models.enums.PerfilEnum;
+import com.patriciasantos.desafio.models.enums.ProfileEnum;
 
-public class UsuarioSpringSecurity implements UserDetails {
+public class UserSpringSecurity implements UserDetails {
 
     private Long id;
     private String username;
@@ -17,11 +17,11 @@ public class UsuarioSpringSecurity implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public UsuarioSpringSecurity(Long id, String username, String password, PerfilEnum perfilEnum) {
+    public UserSpringSecurity(Long id, String username, String password, ProfileEnum profileEnum) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.authorities = Set.of(new SimpleGrantedAuthority(perfilEnum.getDescricao()));
+        this.authorities = Set.of(new SimpleGrantedAuthority(profileEnum.getDescription()));
     }
 
     public Long getId() {
@@ -64,8 +64,8 @@ public class UsuarioSpringSecurity implements UserDetails {
         return true;
     }
 
-    public boolean hasRole(final PerfilEnum perfilEnum) {
-        return getAuthorities().contains(new SimpleGrantedAuthority(perfilEnum.getDescricao()));
+    public boolean hasRole(final ProfileEnum profileEnum) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(profileEnum.getDescription()));
     }
 
         
