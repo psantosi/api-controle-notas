@@ -15,49 +15,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.patriciasantos.desafio.models.Task;
-import com.patriciasantos.desafio.models.to.TaskTO;
-import com.patriciasantos.desafio.services.TaskService;
+import com.patriciasantos.desafio.models.Student;
+import com.patriciasantos.desafio.models.to.StudentTO;
+import com.patriciasantos.desafio.services.StudentService;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/student")
 @Validated
-public class TaskController {
+public class StudentController {
 
-    private final TaskService taskService;
+    private final StudentService studentService;
 
-    public TaskController(final TaskService taskService) {
-        this.taskService = taskService;
+    public StudentController(final StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping("/classroom/{classroomId}")
-    public List<TaskTO> findAllByClassroom(@PathVariable final Long classroomId) {
-        return this.taskService.findAllByClassroom(classroomId);
+    public List<StudentTO> findAllByClassroom(@PathVariable final Long classroomId) {
+        return this.studentService.findAllByClassroom(classroomId);
     }
 
     @GetMapping("/{id}")
-    public TaskTO findById(@PathVariable final Long id) {
-        return this.taskService.findTOById(id);
+    public StudentTO findById(@PathVariable final Long id) {
+        return this.studentService.findTOById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody TaskTO taskTO) {
-        final Task task = this.taskService.create(taskTO);
+    public ResponseEntity<Object> create(@RequestBody StudentTO studentTO) {
+        final Student student = this.studentService.create(studentTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(task.getId()).toUri();
+                .path("/{id}").buildAndExpand(student.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@RequestBody TaskTO taskTO, @PathVariable Long id) {
-        this.taskService.update(taskTO, id);
+    public ResponseEntity<Void> update(@RequestBody StudentTO studentTO, @PathVariable Long id) {
+        this.studentService.update(studentTO, id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        this.taskService.delete(id);
+        this.studentService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

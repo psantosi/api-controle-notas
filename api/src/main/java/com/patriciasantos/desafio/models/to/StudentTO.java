@@ -2,23 +2,23 @@ package com.patriciasantos.desafio.models.to;
 
 import java.io.Serializable;
 
-import com.patriciasantos.desafio.models.Task;
+import com.patriciasantos.desafio.models.Student;
 
-public class TaskTO implements Serializable {
+public class StudentTO implements Serializable {
 
     private Long id;
     private String name;
     private Long classroomId;
 
 
-    public TaskTO() {
+    public StudentTO() {
     }
 
 
-    public TaskTO(final Task task) {
-        this.id = task.getId();
-        this.name = task.getName();
-        this.classroomId = task.getIdClassroom();
+    public StudentTO(final Student student) {
+        this.id = student.getId();
+        this.name = student.getName();
+        this.classroomId = student.getIdClassroom();
     }
 
     public Long getId() {

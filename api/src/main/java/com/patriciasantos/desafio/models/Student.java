@@ -36,7 +36,7 @@ public class Student {
     private Boolean status = true;    
 
     @ManyToOne
-    @JoinColumn(name = "class_id", nullable = false, updatable = false)
+    @JoinColumn(name = "classroom_id", nullable = false, updatable = false)
     private Classroom classroom;
 
     @OneToMany(mappedBy = "student")
@@ -82,12 +82,40 @@ public class Student {
         this.classroom = classroom;
     }
 
+    public Long getIdClassroom() {
+        return this.classroom.getId();
+    }
+
     public List<Grade> getGrades() {
         return this.grades;
     }
 
     public void setGrades(List<Grade> grades) {
         this.grades = grades;
+    }
+
+    public static class StudentBuilder {
+
+        private Student student;
+
+        public StudentBuilder create() {
+            student = new Student();
+            return this;
+        }
+
+        public StudentBuilder withName(final String name) {
+            student.setName(name);
+            return this;
+        }
+
+        public StudentBuilder withClassroom(final Classroom classroom) {
+            student.setClassroom(classroom);
+            return this;
+        }
+
+        public Student build() {
+            return student;
+        }
     }
 
 }
