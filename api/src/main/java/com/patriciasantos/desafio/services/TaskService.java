@@ -83,7 +83,7 @@ public class TaskService {
     }
 
     private void createGrades(final Task task, final Classroom classroom) {
-        final List<Student> students = this.studentRepository.findByClassroomId(classroom.getId());
+        final List<Student> students = this.studentRepository.findByClassroomId(classroom.getId()).stream().filter(student -> student.isStatus()).toList();
         
         if (!students.isEmpty()) {
             final List<GradeTO> gradeTOs = students.stream().map(student -> new GradeTO(classroom, student, task)).toList();

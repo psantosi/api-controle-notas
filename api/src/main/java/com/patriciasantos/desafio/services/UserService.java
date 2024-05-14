@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.patriciasantos.desafio.models.User;
+import com.patriciasantos.desafio.models.enums.ProfileEnum;
 import com.patriciasantos.desafio.models.to.UserTO;
 import com.patriciasantos.desafio.repositories.UserRepository;
 import com.patriciasantos.desafio.security.UserSpringSecurity;
@@ -46,7 +47,7 @@ public class UserService {
         final User user = new User.UserBuilder().create()
         .withUsername(userTO.getUsername())
         .withPassword(this.bCryptPasswordEncoder.encode(userTO.getPassword()))
-        .withProfile(userTO.getProfile())
+        .withProfile(ProfileEnum.USER.getCode())
         .build();
         
         return this.userRepository.save(user);

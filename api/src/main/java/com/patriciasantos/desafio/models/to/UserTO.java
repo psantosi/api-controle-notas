@@ -4,7 +4,6 @@ public class UserTO {
 
     private String username;
     private String password;
-    private Integer profile;
 
 
     public String getUsername() {
@@ -21,9 +20,5 @@ public class UserTO {
 
     public void setPassword(final String password) {
         this.password = password;
-    }
-
-    public Integer getProfile() {
-        return profile;
-    }    
+    }   
 }

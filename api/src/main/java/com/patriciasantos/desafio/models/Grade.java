@@ -9,8 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -24,8 +22,6 @@ public class Grade {
 
     @Column(name = "grade", length = 10, nullable = false)
     @NonNull
-    @NotEmpty
-    @Size(min = 2, max = 10)
     private Integer grade = 0;
 
     @ManyToOne
