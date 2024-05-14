@@ -10,5 +10,5 @@ import com.patriciasantos.desafio.models.Task;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    List<Task> findByClassroomId(Long id);
+    List<Task> findByClassroomId(final Long id);
 }

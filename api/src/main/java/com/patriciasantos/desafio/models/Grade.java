@@ -29,6 +29,10 @@ public class Grade {
     private Integer grade = 0;
 
     @ManyToOne
+    @JoinColumn(name = "classroom_id", nullable = false, updatable = false)
+    private Classroom classroom;    
+
+    @ManyToOne
     @JoinColumn(name = "student_id", nullable = false, updatable = false)
     private Student student;
 
@@ -45,7 +49,7 @@ public class Grade {
         return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
@@ -53,15 +57,23 @@ public class Grade {
         return this.grade;
     }
 
-    public void setGrade(Integer grade) {
+    public void setGrade(final Integer grade) {
         this.grade = grade;
+    }
+
+    public Classroom getClassroom() {
+        return this.classroom;
+    }
+
+    public void setClassroom(final Classroom classroom) {
+        this.classroom = classroom;
     }
 
     public Student getStudent() {
         return this.student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(final Student student) {
         this.student = student;
     }
 
@@ -69,9 +81,38 @@ public class Grade {
         return this.task;
     }
 
-    public void setTask(Task task) {
+    public void setTask(final Task task) {
         this.task = task;
     }
 
+    public static class GradeBuilder {
+
+        private Grade grade;
+
+        public GradeBuilder create() {
+            grade = new Grade();
+            return this;
+        }
+
+        public GradeBuilder withClassroom(final Classroom classroom) {
+            grade.setClassroom(classroom);
+            return this;
+        }
+
+
+        public GradeBuilder withStudent(final Student student) {
+            grade.setStudent(student);
+            return this;
+        }
+
+        public GradeBuilder withTask(final Task task) {
+            grade.setTask(task);
+            return this;
+        }
+
+        public Grade build() {
+            return grade;
+        }
+    }
 
 }

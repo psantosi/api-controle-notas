@@ -11,5 +11,5 @@ import com.patriciasantos.desafio.models.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    List<Student> findByClassroomId(Long id);
+    List<Student> findByClassroomId(final Long id);
 }

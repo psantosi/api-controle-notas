@@ -27,7 +27,7 @@ public class ClassroomService {
     public List<ClassroomTO> findAllByUser() {
        final Long userId = this.userService.getAuthenticatedUserId();
        final List<Classroom> classrooms = this.classroomRepository.findByUserId(userId);
-       return classrooms.stream().map(classroom -> new ClassroomTO(classroom)).toList();
+       return classrooms.stream().filter(classroom -> classroom.isStatus()).map(classroom -> new ClassroomTO(classroom)).toList();
     }
 
     public Classroom findById(final Long id) {

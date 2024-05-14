@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.patriciasantos.desafio.models.Classroom;
+import com.patriciasantos.desafio.models.Student;
 import com.patriciasantos.desafio.models.Task;
+import com.patriciasantos.desafio.models.to.GradeTO;
 import com.patriciasantos.desafio.models.to.TaskTO;
+import com.patriciasantos.desafio.repositories.StudentRepository;
 import com.patriciasantos.desafio.repositories.TaskRepository;
 import com.patriciasantos.desafio.services.exceptions.ObjectNotFoundException;
 
@@ -17,15 +20,25 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final ClassroomService classroomService;
+    private final StudentRepository studentRepository;
+    private final GradeService gradeService;
     
-    public TaskService(final TaskRepository taskRepository, final ClassroomService classroomService) {
+    public TaskService(final TaskRepository taskRepository,
+                       final ClassroomService classroomService,
+                       final StudentRepository studentRepository, 
+                       final GradeService gradeService) {
         this.taskRepository = taskRepository;
         this.classroomService = classroomService;
+        this.studentRepository = studentRepository;
+        this.gradeService = gradeService;
     }
 
     public List<TaskTO> findAllByClassroom(final Long classroomId) {
-        final List<Task> tasks = this.taskRepository.findByClassroomId(classroomId);
-        return tasks.stream().map(task -> new TaskTO(task)).toList();
+        return this.taskRepository.findByClassroomId(classroomId)
+        .stream()
+        .filter(task -> task.isStatus())
+        .map(task -> new TaskTO(task))
+        .toList();
     }
 
     public Task findById(final Long id) {
@@ -48,7 +61,10 @@ public class TaskService {
         .withClassroom(classroom)
         .build();
 
-        return this.taskRepository.save(task);
+        this.taskRepository.save(task);
+        this.createGrades(task, classroom);
+
+        return task;
     }
 
     @Transactional(rollbackOn = Exception.class)
@@ -63,6 +79,16 @@ public class TaskService {
         final Task task = this.findById(id);
         task.setStatus(false);
         this.taskRepository.save(task);
+        this.gradeService.deleteByTask(id);
+    }
+
+    private void createGrades(final Task task, final Classroom classroom) {
+        final List<Student> students = this.studentRepository.findByClassroomId(classroom.getId());
+        
+        if (!students.isEmpty()) {
+            final List<GradeTO> gradeTOs = students.stream().map(student -> new GradeTO(classroom, student, task)).toList();
+            this.gradeService.createAll(gradeTOs);
+        }
     }
 
     private void validateIfTaskWasDeleted(final Task task) {

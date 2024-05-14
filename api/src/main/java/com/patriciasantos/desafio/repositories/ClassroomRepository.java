@@ -10,5 +10,5 @@ import com.patriciasantos.desafio.models.Classroom;
 @Repository
 public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
 
-    List<Classroom> findByUserId(Long id);
+    List<Classroom> findByUserId(final Long id);
 }

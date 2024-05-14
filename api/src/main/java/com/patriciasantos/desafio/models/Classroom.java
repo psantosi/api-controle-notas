@@ -45,6 +45,9 @@ public class Classroom {
     @OneToMany(mappedBy = "classroom")
     private List<Task> tasks = new ArrayList<Task>();
 
+    @OneToMany(mappedBy = "classroom")
+    private List<Grade> grades = new ArrayList<Grade>();
+
     public Classroom() {
     }
 
@@ -92,6 +95,10 @@ public class Classroom {
         this.students = students;
     }
 
+    public Long getIdUser() {
+        return user.getId();
+    }
+
     public List<Task> getTasks() {
         return this.tasks;
     }
@@ -100,10 +107,13 @@ public class Classroom {
         this.tasks = tasks;
     }
 
-    public Long getIdUser() {
-        return user.getId();
+    public List<Grade> getGrades() {
+        return this.grades;
     }
 
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
 
     public static class ClassroomBuilder {
 

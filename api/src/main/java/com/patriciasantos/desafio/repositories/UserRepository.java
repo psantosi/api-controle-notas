@@ -10,5 +10,5 @@ import com.patriciasantos.desafio.models.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 
-    User findByUsername(String username);
+    User findByUsername(final String username);
 }

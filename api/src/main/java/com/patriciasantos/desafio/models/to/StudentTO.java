@@ -1,6 +1,8 @@
 package com.patriciasantos.desafio.models.to;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.patriciasantos.desafio.models.Student;
 
@@ -9,11 +11,11 @@ public class StudentTO implements Serializable {
     private Long id;
     private String name;
     private Long classroomId;
+    private List<GradeTO> grades = new ArrayList<GradeTO>(); 
 
 
     public StudentTO() {
     }
-
 
     public StudentTO(final Student student) {
         this.id = student.getId();
@@ -46,5 +48,8 @@ public class StudentTO implements Serializable {
         this.classroomId = classroomId;
     }
 
+    public void addGrades(final List<GradeTO> gradeTOs) {
+        this.grades.addAll(gradeTOs);
+    }
 
 }
