@@ -24,7 +24,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
           # Github path
-          source: "api/**"
+          source: "**"
           # VPS path
           target: "~/desafio"
 
