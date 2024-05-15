@@ -57,4 +57,4 @@ jobs:
           script: |
             cd ~/desafio
             docker-compose build --no-cache app
-            docker-compose up -d app
+            docker-compose up -d app < /dev/null
