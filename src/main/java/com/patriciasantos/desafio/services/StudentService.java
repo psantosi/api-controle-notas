@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.patriciasantos.desafio.models.Classroom;
-import com.patriciasantos.desafio.models.Grade;
 import com.patriciasantos.desafio.models.Student;
 import com.patriciasantos.desafio.models.Task;
 import com.patriciasantos.desafio.models.to.GradeTO;
@@ -35,15 +34,11 @@ public class StudentService {
     }
 
     public List<StudentTO> findAllByClassroom(final Long classroomId) {
-        final List<StudentTO> studentTOs = this.studentRepository.findByClassroomId(classroomId)
-        .stream()
+        final List<Student> students = this.studentRepository.findByClassroomId(classroomId);
+        return students.stream()
         .filter(student -> student.isStatus())
         .map(student -> new StudentTO(student))
         .toList();
-
-        this.addGrades(studentTOs, classroomId);
-
-        return studentTOs;
     }
 
     public Student findById(final Long id) {
@@ -85,21 +80,6 @@ public class StudentService {
         student.setStatus(false);
         this.studentRepository.save(student);
         this.gradeService.deleteByStudent(id);
-    }
-
-    private void addGrades(final List<StudentTO> studentTOs, final Long classroomId) {
-        final List<Grade> grades = this.gradeService.findAllByClassroom(classroomId);
-        if (!grades.isEmpty()) {
-            studentTOs.forEach(studentTO -> {
-                final List<GradeTO> gradeTOs = grades
-                .stream()
-                .filter(grade -> grade.getStudent().getId().equals(studentTO.getId()))
-                .map(grade -> new GradeTO(grade))
-                .toList();
-
-                studentTO.addGrades(gradeTOs);
-            });
-        }
     }
 
     private void createGrades(final Student student, final Classroom classroom) {

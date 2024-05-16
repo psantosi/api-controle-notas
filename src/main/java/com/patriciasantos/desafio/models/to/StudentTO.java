@@ -21,6 +21,10 @@ public class StudentTO implements Serializable {
         this.id = student.getId();
         this.name = student.getName();
         this.classroomId = student.getIdClassroom();
+        this.grades.addAll(student.getGrades()
+        .stream()
+        .map(grade -> new GradeTO(grade.getId(), grade.getGrade()))
+        .toList());
     }
 
     public Long getId() {
@@ -46,6 +50,14 @@ public class StudentTO implements Serializable {
 
     public void setClassroomId(Long classroomId) {
         this.classroomId = classroomId;
+    }
+
+    public List<GradeTO> getGrades() {
+        return this.grades;
+    }
+
+    public void setGrades(List<GradeTO> grades) {
+        this.grades = grades;
     }
 
     public void addGrades(final List<GradeTO> gradeTOs) {

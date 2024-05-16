@@ -26,7 +26,11 @@ public class GradeTO implements Serializable{
         this.task = grade.getTask();
     }
 
-
+    public GradeTO(Long id, Integer grade) {
+        this.id = id;
+        this.grade = grade;
+    }
+    
     public GradeTO(final Classroom classroom, final Student student, final Task task) {
         this.classroom = classroom;
         this.student = student;
