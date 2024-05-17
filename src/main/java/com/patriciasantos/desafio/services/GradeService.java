@@ -21,8 +21,11 @@ public class GradeService {
         this.gradeRepository = gradeRepository;
     }
 
-    public List<Grade> findAllByClassroom(final Long classroomId) {
-        return this.gradeRepository.findByClassroomId(classroomId);
+    public List<GradeTO> findAllByStudent(final Long studentId) {
+        final List<Grade> grades = this.gradeRepository.findByStudentId(studentId);
+        return grades.stream()
+        .map(grade -> new GradeTO(grade.getId(), grade.getGrade(), grade.getTask()))
+        .toList();            
     }
 
     public Grade findById(final Long id) {

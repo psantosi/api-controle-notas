@@ -10,7 +10,6 @@ import com.patriciasantos.desafio.models.Grade;
 @Repository
 public interface GradeRepository extends JpaRepository<Grade, Long> {
 
-    List<Grade> findByClassroomId(final Long id);
     List<Grade> findByStudentId(final Long id);
     List<Grade> findByTaskId(final Long id);
 }

@@ -3,7 +3,6 @@ package com.patriciasantos.desafio.models.to;
 import java.io.Serializable;
 
 import com.patriciasantos.desafio.models.Classroom;
-import com.patriciasantos.desafio.models.Grade;
 import com.patriciasantos.desafio.models.Student;
 import com.patriciasantos.desafio.models.Task;
 
@@ -13,22 +12,16 @@ public class GradeTO implements Serializable{
     private Integer grade;
     private Classroom classroom;    
     private Student student;
-    private Task task;    
+    private Task task;
+    private TaskTO taskObj;    
 
     public GradeTO() {
     }
 
-    public GradeTO(final Grade grade) {
-        this.id = grade.getId();
-        this.grade = grade.getGrade();
-        this.classroom = grade.getClassroom();
-        this.student = grade.getStudent();
-        this.task = grade.getTask();
-    }
-
-    public GradeTO(Long id, Integer grade) {
+    public GradeTO(final Long id, final Integer grade, final Task task) {
         this.id = id;
         this.grade = grade;
+        this.taskObj = new TaskTO(task);
     }
     
     public GradeTO(final Classroom classroom, final Student student, final Task task) {
@@ -78,5 +71,14 @@ public class GradeTO implements Serializable{
     public void setTask(Task task) {
         this.task = task;
     }
-    
+
+
+    public TaskTO getTaskObj() {
+        return this.taskObj;
+    }
+
+    public void setTaskObj(TaskTO taskObj) {
+        this.taskObj = taskObj;
+    }
+        
 }
